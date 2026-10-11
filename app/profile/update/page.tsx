@@ -44,6 +44,7 @@ export default function Update() {
             />
           </label>
           <button
+            type="submit"
             disabled={busy}
             className="mt-5 rounded-xl bg-[#17643c] px-5 py-3 font-bold text-white disabled:opacity-60"
           >
