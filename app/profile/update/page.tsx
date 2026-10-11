@@ -3,20 +3,24 @@ import { Footer, Header } from "@/components/site";
 import { useAuth } from "@/components/auth";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
-import { FormEvent, useEffect } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 export default function Update() {
   const { user, loading } = useAuth(),
     r = useRouter();
+  const [busy, setBusy] = useState(false);
   useEffect(() => {
     if (!loading && !user) r.replace("/signin");
   }, [user, loading, r]);
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setBusy(true);
     const name = String(new FormData(e.currentTarget).get("name"));
     const result = await authClient.updateUser({ name });
-    if (result.error)
+    if (result.error) {
+      setBusy(false);
       return toast.error(result.error.message || "তথ্য আপডেট হয়নি");
+    }
     toast.success("তথ্য সফলভাবে আপডেট হয়েছে");
     r.push("/profile");
     r.refresh();
@@ -39,8 +43,11 @@ export default function Update() {
               className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3"
             />
           </label>
-          <button className="mt-5 rounded-xl bg-[#17643c] px-5 py-3 font-bold text-white">
-            তথ্য আপডেট করুন
+          <button
+            disabled={busy}
+            className="mt-5 rounded-xl bg-[#17643c] px-5 py-3 font-bold text-white disabled:opacity-60"
+          >
+            {busy ? "আপডেট হচ্ছে…" : "তথ্য আপডেট করুন"}
           </button>
         </form>
       </main>
