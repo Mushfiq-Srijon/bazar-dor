@@ -19,21 +19,20 @@ export default function Home() {
           <div className="container grid min-h-[390px] items-center gap-8 py-12 md:grid-cols-2">
             <div>
               <p className="mb-3 font-bold text-[#287c4d]">
-                আজকের বাজারদর, আপনার হাতের মুঠোয়
+                প্রতিদিনের বাজারদর, এক জায়গায়
               </p>
               <h1 className="max-w-xl text-4xl font-bold leading-tight text-[#153f29] sm:text-5xl">
-                নিত্যপ্রয়োজনীয় পণ্যের{" "}
-                <span className="text-[#25834d]">সঠিক দাম</span> জানুন
+                বাজারের{" "}
+                <span className="text-[#25834d]">সঠিক দাম</span> জানুন সহজেই
               </h1>
               <p className="mt-5 max-w-lg text-lg leading-8 text-slate-600">
-                দেশের বিভিন্ন বাজার থেকে সংগ্রহ করা প্রতিদিনের পণ্যমূল্য। সচেতন
-                থাকুন, সঠিক সিদ্ধান্ত নিন।
+                বিভিন্ন বাজারের পণ্যমূল্য দেখে তুলনা করুন দাম এবং বেছে নিন আপনার সেরা কেনাকাটার সিদ্ধান্ত।
               </p>
               <a
                 href="#সব-পণ্য"
                 className="mt-7 inline-block rounded-xl bg-[#17643c] px-6 py-3 font-bold text-white shadow-lg shadow-emerald-900/15"
               >
-                আজকের সব দাম দেখুন →
+                আজকের বাজারদর দেখুন →
               </a>
             </div>
             <div className="relative">
