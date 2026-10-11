@@ -1,29 +1,21 @@
 # বাজার দর (BazarDor)
 
-বাংলাদেশের নিত্যপ্রয়োজনীয় পণ্যের প্রতিদিনের বাজারমূল্য দেখার একটি সুন্দর, দ্রুত ও রেসপনসিভ ওয়েব অ্যাপ।
+A modern, fast, and responsive web application for exploring daily prices of essential commodities across Bangladesh. Stay informed about market prices and make smarter purchasing decisions.
 
-## প্রযুক্তি
+## Technologies Used
 
-- Next.js 15 App Router ও TypeScript
-- Tailwind CSS 4
-- React Hot Toast
-- Programming Hero BazarDor API
-- Local browser authentication fallback
+- **Next.js 16** — App Router and application framework
+- **TypeScript** — Type-safe development
+- **Tailwind CSS 3** — Responsive styling and UI design
+- **Better Auth** — Authentication and session management
+- **MongoDB** — Database
+- **React Hot Toast** — Notifications
+- **Programming Hero BazarDor API** — Product prices and market information
 
-## মূল বৈশিষ্ট্য
+## Key Features
 
-- লাইভ API থেকে পণ্যের মূল্য ও বাজারভিত্তিক তথ্য
-- দাম বাড়া ও কমার শীর্ষ পণ্যের আলাদা সেকশন
-- সকল ডিভাইসে রেসপনসিভ পণ্য গ্রিড ও ন্যাভিগেশন
-- বিভাগভিত্তিক পণ্য, loading skeleton এবং সংখ্যাভিত্তিক মূল্য sorting
-- সুরক্ষিত product details route, sign in/sign up ও profile update
-- নিরবচ্ছিন্ন price ticker এবং সহজ 404/empty states
-
-## শুরু করুন
-
-```bash
-npm install
-npm run dev
-```
-
-তারপর [http://localhost:3000](http://localhost:3000) খুলুন।
+1. **Daily Market Prices** — Explore essential commodity prices and market-specific price information using a live API.
+2. **Price Trend Highlights** — Discover products with the highest price increases and decreases.
+3. **Category-Based Browsing** — Browse products by category and sort them by numeric price.
+4. **Secure Authentication** — Sign in or register using email/password or Google OAuth.
+5. **Responsive User Experience** — Enjoy responsive product cards, protected product details, profile updates, loading skeletons, and user-friendly error states.
