@@ -7,6 +7,8 @@ if (!uri) throw new Error("MONGODB_URI is not configured");
 
 const client = new MongoClient(uri);
 const database = client.db("bazardar");
+const googleClientId = process.env.GOOGLE_CLIENT_ID;
+const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
 const vercelOrigins = [
   process.env.VERCEL_PROJECT_PRODUCTION_URL,
   process.env.VERCEL_BRANCH_URL,
@@ -18,6 +20,15 @@ const vercelOrigins = [
 export const auth = betterAuth({
   database: mongodbAdapter(database, { client }),
   emailAndPassword: { enabled: true, autoSignIn: true },
+  socialProviders:
+    googleClientId && googleClientSecret
+      ? {
+          google: {
+            clientId: googleClientId,
+            clientSecret: googleClientSecret,
+          },
+        }
+      : undefined,
   trustedOrigins: [
     "http://localhost:3000",
     "http://localhost:*",
