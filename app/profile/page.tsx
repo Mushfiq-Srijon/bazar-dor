@@ -5,11 +5,12 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 export default function Profile() {
-  const { user } = useAuth(),
+  const { user, loading } = useAuth(),
     r = useRouter();
   useEffect(() => {
-    if (!user) r.replace("/signin");
-  }, [user, r]);
+    if (!loading && !user) r.replace("/signin");
+  }, [loading, user, r]);
+  if (loading || !user) return null;
   return (
     <>
       <Header />
