@@ -1,6 +1,6 @@
 "use client";
 import { Footer, Header, useProducts } from "@/components/site";
-import { bn, unit } from "@/lib/products";
+import { bn, marketAverage, unit } from "@/lib/products";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useAuth } from "@/components/auth";
@@ -110,7 +110,7 @@ export default function Product() {
                     <td className="border-b border-l border-black p-4 text-right text-black">{bn(m.min)} টাকা</td>
                     <td className="border-b border-l border-black p-4 text-right text-black">{bn(m.max)} টাকা</td>
                     <td className="border-b border-l border-black p-4 text-right font-bold text-black">
-                      {bn(Math.round((m.min + m.max) / 2))} টাকা
+                      {bn(marketAverage(m.min, m.max))} টাকা
                     </td>
                   </tr>
                 ))}
