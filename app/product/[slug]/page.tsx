@@ -44,7 +44,10 @@ export default function Product() {
       </>
     );
   const min = Math.min(...p.markets.map((x) => x.min)),
-    max = Math.max(...p.markets.map((x) => x.max));
+    max = Math.max(...p.markets.map((x) => x.max)),
+    priceDifference = p.today - p.yesterday,
+    priceDirection =
+      priceDifference > 0 ? "বেড়েছে" : priceDifference < 0 ? "কমেছে" : "অপরিবর্তিত";
   return (
     <>
       <Header />
@@ -61,13 +64,21 @@ export default function Product() {
                 </p>
                 <h1 className="text-3xl font-bold">{p.nameBn}</h1>
                 <p className="text-slate-600">
-                  দেশের বিভিন্ন বাজারের আজকের গড় মূল্য
+                  গতকালের তুলনায় আজ দাম {priceDirection} {bn(Math.abs(priceDifference))} টাকা
                 </p>
               </div>
             </div>
-            <span className="w-fit rounded-full bg-white px-4 py-2 font-semibold text-slate-600">
-              {unit(p.unit)}
-            </span>
+            <div className="flex flex-wrap items-center gap-2">
+              <span
+                className={`w-fit rounded-full bg-white px-4 py-2 font-bold ${p.change.dir === "up" ? "text-emerald-600" : p.change.dir === "down" ? "text-rose-500" : "text-slate-600"}`}
+              >
+                {p.change.dir === "up" ? "▲" : p.change.dir === "down" ? "▼" : "—"}{" "}
+                আজকের দাম - {bn(p.today)} টাকা
+              </span>
+              <span className="w-fit rounded-full bg-white px-4 py-2 font-semibold text-slate-600">
+                {unit(p.unit)}
+              </span>
+            </div>
           </div>
           <div className="mt-8 grid grid-cols-3 gap-3">
             <Stat label="সর্বনিম্ন দাম" value={min} />
@@ -80,22 +91,26 @@ export default function Product() {
           <p className="mb-5 text-slate-500">
             বিভিন্ন বাজারে পণ্যটির সর্বনিম্ন ও সর্বোচ্চ মূল্য
           </p>
-          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
-            <table className="w-full text-left">
+          <div className="overflow-x-auto border border-slate-300 bg-white">
+            <table className="w-full min-w-[640px] border-collapse text-left">
               <thead className="bg-slate-50 text-sm text-slate-500">
                 <tr>
-                  <th className="p-4">বাজার</th>
-                  <th className="p-4">বিভাগ</th>
-                  <th className="p-4 text-right">দামের সীমা</th>
+                  <th className="border-b border-slate-300 p-4">বাজার</th>
+                  <th className="border-b border-slate-300 p-4">বিভাগ</th>
+                  <th className="border-b border-slate-300 p-4 text-right">সর্বনিম্ন</th>
+                  <th className="border-b border-slate-300 p-4 text-right">সর্বাধিক</th>
+                  <th className="border-b border-slate-300 p-4 text-right">গড়</th>
                 </tr>
               </thead>
               <tbody>
                 {p.markets.map((m, i) => (
-                  <tr key={i} className="border-t border-slate-100">
-                    <td className="p-4 font-semibold">{m.market}</td>
-                    <td className="p-4 text-slate-500">{m.division}</td>
-                    <td className="p-4 text-right font-bold text-[#17643c]">
-                      {bn(m.min)} – {bn(m.max)} টাকা
+                  <tr key={i}>
+                    <td className="border-b border-black p-4 font-semibold text-black">{m.market}</td>
+                    <td className="border-b border-l border-black p-4 text-black">{m.division}</td>
+                    <td className="border-b border-l border-black p-4 text-right text-black">{bn(m.min)} টাকা</td>
+                    <td className="border-b border-l border-black p-4 text-right text-black">{bn(m.max)} টাকা</td>
+                    <td className="border-b border-l border-black p-4 text-right font-bold text-black">
+                      {bn(Math.round((m.min + m.max) / 2))} টাকা
                     </td>
                   </tr>
                 ))}
