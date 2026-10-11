@@ -15,7 +15,7 @@ export default function Category() {
         ? b.today - a.today
         : 0,
   );
-  const name = products[0]?.categoryNameBn;
+  const category = products[0];
   return (
     <>
       <Header />
@@ -40,7 +40,10 @@ export default function Category() {
           <>
             <div className="mb-7 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
               <div>
-                <h1 className="text-3xl font-bold">{name || "পণ্য"} বাজারদর</h1>
+                <h1 className="flex items-center gap-2 text-3xl font-bold">
+                  <span aria-hidden="true">{category?.categoryIcon}</span>
+                  {category?.categoryNameBn || "পণ্য"} বাজারদর
+                </h1>
                 <p className="text-slate-500">আজকের হালনাগাদ মূল্য তালিকা</p>
               </div>
               <label className="text-sm font-semibold">
