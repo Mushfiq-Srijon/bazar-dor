@@ -114,7 +114,15 @@ export function Header() {
               <span key={i} className="whitespace-nowrap">
                 {p.image} {p.nameBn} <b>{bn(p.today)} টাকা</b>/
                 <small>{unit(p.unit).replace("প্রতি ", "")}</small>{" "}
-                <em className={p.change.dir === "up" ? "text-emerald-600" : "text-rose-500"}>
+                <em
+                  className={
+                    p.change.dir === "up"
+                      ? "text-emerald-600"
+                      : p.change.dir === "down"
+                        ? "text-rose-500"
+                        : "text-slate-500"
+                  }
+                >
                   {p.change.dir === "up" ? "▲" : "▼"} {bn(Math.abs(p.change.pct))}%
                 </em>
               </span>
