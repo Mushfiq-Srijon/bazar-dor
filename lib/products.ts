@@ -89,3 +89,5 @@ export const unit = (u: string) =>
     dozen: "প্রতি ডজন",
     piece: "প্রতি পিস",
   })[u] || "প্রতি কেজি";
+export const marketAverage = (min: number, max: number) =>
+  Math.round((min + max) / 2);
