@@ -30,13 +30,17 @@ export function AuthForm({ signup = false }: { signup?: boolean }) {
   };
   const continueWithGoogle = async () => {
     setBusy(true);
-    const result = await authClient.signIn.social({
-      provider: "google",
-      callbackURL: "/",
-    });
-    if (result.error) {
+    try {
+      const result = await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/",
+      });
+      if (!result.error) return;
       setBusy(false);
       toast.error(result.error.message || "Google সাইন ইন করা যায়নি");
+    } catch {
+      setBusy(false);
+      toast.error("Google সাইন ইন করা যায়নি");
     }
   };
   return (
