@@ -72,6 +72,7 @@ export function AuthForm({ signup = false }: { signup?: boolean }) {
             placeholder="কমপক্ষে ৮ অক্ষর"
           />
           <button
+            type="submit"
             disabled={busy}
             className="w-full rounded-xl bg-[#17643c] py-3 font-bold text-white disabled:opacity-60"
           >
