@@ -6,16 +6,23 @@ import { useAuth } from "./auth";
 import { fallback, Product, bn, unit, API } from "@/lib/products";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-const cats = [
-  ["chal", "চাল"],
-  ["dal", "ডাল"],
-  ["tel", "তেল"],
-  ["sobji", "সবজি"],
-  ["mach", "মাছ"],
-  ["mangsho", "মাংস"],
-  ["dim", "ডিম"],
-  ["mosla", "মসলা"],
-];
+const cats = (
+  [
+    ["chal", "চাল"],
+    ["dal", "ডাল"],
+    ["tel", "তেল"],
+    ["sobji", "সবজি"],
+    ["mach", "মাছ"],
+    ["mangsho", "মাংস"],
+    ["dim", "ডিম"],
+    ["mosla", "মসলা"],
+  ] as const
+).map(([slug, name]) => ({
+  slug,
+  name,
+  icon: fallback.find((product) => product.category === slug)?.categoryIcon,
+}));
+
 export function Header() {
   const path = usePathname(),
     { user, logout } = useAuth(),
@@ -57,24 +64,10 @@ export function Header() {
               {date ? `আজ, ${date}` : "আজ"}
             </div>
           </Link>
-          <nav className="hidden items-center gap-1 md:flex">
-            {cats.map(([s, n]) => (
-              <Link
-                className={`rounded-full px-3 py-1.5 text-sm font-semibold ${path === "/category/" + s ? "bg-[#dff3e7] text-[#17643c]" : "text-slate-600 hover:bg-slate-50"}`}
-                href={"/category/" + s}
-                key={s}
-              >
-                {n}
-              </Link>
-            ))}
-          </nav>
           <div className="flex items-center gap-2 text-sm font-semibold">
             {user ? (
               <>
-                <Link
-                  href="/profile"
-                  className="rounded-lg px-3 py-2 text-[#17643c]"
-                >
+                <Link href="/profile" className="rounded-lg px-3 py-2 text-[#17643c]">
                   প্রোফাইল
                 </Link>
                 <button
@@ -89,29 +82,39 @@ export function Header() {
                 <Link href="/signin" className="px-3 py-2 text-[#17643c]">
                   সাইন ইন
                 </Link>
-                <Link
-                  href="/signup"
-                  className="rounded-lg bg-[#17643c] px-3 py-2 text-white"
-                >
+                <Link href="/signup" className="rounded-lg bg-[#17643c] px-3 py-2 text-white">
                   সাইন আপ
                 </Link>
               </>
             )}
           </div>
         </div>
+        <nav aria-label="পণ্যের বিভাগ" className="border-t border-slate-100 bg-[#f7fbf7]">
+          <div className="container overflow-x-auto py-3">
+            <div className="flex min-w-max gap-2">
+              {cats.map(({ slug, name, icon }) => (
+                <Link
+                  className={`flex shrink-0 items-center gap-2 rounded-xl border px-2.5 py-1.5 text-sm font-semibold transition ${path === "/category/" + slug ? "border-[#9bcdb0] bg-[#dff3e7] text-[#17643c]" : "border-transparent text-slate-600 hover:border-[#d8eadc] hover:bg-white"}`}
+                  href={"/category/" + slug}
+                  key={slug}
+                >
+                  <span aria-hidden="true" className="text-xl leading-none">
+                    {icon}
+                  </span>
+                  <span>{name}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </nav>
         <div className="overflow-hidden border-t border-slate-100 bg-[#f0f8f2]">
           <div className="ticker-track flex gap-8 py-2 text-sm text-slate-700">
             {[...fallback, ...fallback].map((p, i) => (
               <span key={i} className="whitespace-nowrap">
                 {p.image} {p.nameBn} <b>{bn(p.today)} টাকা</b>/
                 <small>{unit(p.unit).replace("প্রতি ", "")}</small>{" "}
-                <em
-                  className={
-                    p.change.dir === "up" ? "text-emerald-600" : "text-rose-500"
-                  }
-                >
-                  {p.change.dir === "up" ? "▲" : "▼"}{" "}
-                  {bn(Math.abs(p.change.pct))}%
+                <em className={p.change.dir === "up" ? "text-emerald-600" : "text-rose-500"}>
+                  {p.change.dir === "up" ? "▲" : "▼"} {bn(Math.abs(p.change.pct))}%
                 </em>
               </span>
             ))}
@@ -123,15 +126,15 @@ export function Header() {
 }
 export function Footer() {
   return (
-    <footer className="mt-16 bg-[#123d2b] py-10 text-white">
+    <footer className="mt-16 py-10 border border-gray-300 text-black">
       <div className="container flex flex-col justify-between gap-5 text-sm md:flex-row">
         <p className="text-lg font-semibold">
           বাজার দর{" "}
-          <span className="font-normal text-emerald-100">
+          <span className="font-normal text-black">
             — প্রয়োজনীয় পণ্যের দাম এক নজরে।
           </span>
         </p>
-        <p className="max-w-md text-emerald-100">
+        <p className="max-w-md text-black">
           সকল দাম সম্ভাব্য; বাজার অবস্থার ওপর নির্ভর করে পরিবর্তিত হয়।
         </p>
       </div>
