@@ -97,6 +97,7 @@ export function Header() {
                   className={`flex shrink-0 items-center gap-2 rounded-xl border px-2.5 py-1.5 text-sm font-semibold transition ${path === "/category/" + slug ? "border-[#9bcdb0] bg-[#dff3e7] text-[#17643c]" : "border-transparent text-slate-600 hover:border-[#d8eadc] hover:bg-white"}`}
                   href={"/category/" + slug}
                   key={slug}
+                  aria-current={path === "/category/" + slug ? "page" : undefined}
                 >
                   <span aria-hidden="true" className="text-xl leading-none">
                     {icon}
